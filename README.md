@@ -8,3 +8,37 @@ git clone https://github.com/xiaoqidun/ihash.git
 cd ihash
 go build ihash.go
 ```
+# 校验类型
+- md5sum
+- sha1sum
+- sha256sum
+- sha512sum
+- sha3sum224
+- sha3sum256
+- sha3sum384
+- sha3sum512
+# 快捷命令
+## linux
+```
+ihash -install ./bin/
+```
+## windows
+```
+ihash -install .\bin\
+```
+# 字符校验
+```
+echo admin | md5sum
+echo admin | ihash md5sum
+```
+# 文件校验
+```
+md5sum *
+ihash md5sum *
+```
+# 传参说明
+```
+快捷命令 文件1 文件2 文件3 ...
+原始程序 校验类型 文件1 文件2 文件3 ...
+不传任何文件时从stdin（命令行）读取字符
+```

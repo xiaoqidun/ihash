@@ -8,6 +8,11 @@ git clone https://github.com/xiaoqidun/ihash.git
 cd ihash
 go build ihash.go
 ```
+# 手动安装
+1. 根据系统架构下载为你编译好的[二进制文件](https://github.com/xiaoqidun/ihash/releases)
+2. 将下载好的二进制文件重命名为ihash并保留后缀
+3. 把ihash文件移动到系统PATH环境变量中的目录下
+4. windows外的系统需使用chmod命令赋予可执行权限
 # 校验类型
 - md5sum
 - sha1sum

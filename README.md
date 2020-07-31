@@ -18,8 +18,7 @@ go build ihash.go
 - sha3sum384
 - sha3sum512
 # 快捷命令
-> 自行将./bin/替换成处于PATH环境变量中的目录路径
-## linux
+自行将./bin/替换成处于PATH环境变量中的目录路径
 ```
 ihash -install ./bin/
 ```

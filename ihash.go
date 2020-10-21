@@ -10,6 +10,7 @@ import (
 	"fmt"
 	"golang.org/x/crypto/sha3"
 	"hash"
+	"io"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -111,8 +112,7 @@ func StrHash(hashType string, hashData []byte) string {
 }
 
 func FileHash(hashType string, hashFile string) {
-	msg := "progress:%.2f%%    filename:%s\r"
-	success := "%x    %s\n"
+	success := "%x  %s"
 	fileOpen, err := os.Open(hashFile)
 	if err != nil {
 		return
@@ -124,8 +124,6 @@ func FileHash(hashType string, hashFile string) {
 	if err != nil || fileStat.IsDir() {
 		return
 	}
-	fileSize := fileStat.Size()
-	readSize := 0
 	readBytes := make([]byte, 8192)
 	var hashHandle interface{}
 	switch hashType {
@@ -146,32 +144,17 @@ func FileHash(hashType string, hashFile string) {
 	case "sha3sum512":
 		hashHandle = sha3.New512()
 	}
-	printLength := 0
 	for {
 		n, err := fileOpen.Read(readBytes)
 		if err != nil {
+			if err == io.EOF && n > 0 {
+				hashHandle.(hash.Hash).Write(readBytes[:n])
+			}
 			break
 		}
-		readSize += n
 		hashHandle.(hash.Hash).Write(readBytes[:n])
-		if 0 == readSize%67108864 {
-			printMsg := fmt.Sprintf(msg, float64(readSize)/float64(fileSize)*100, fileStat.Name())
-			printMsgLength := len(printMsg)
-			if printLength > printMsgLength {
-				printMsg += strings.Repeat(" ", printLength-printMsgLength)
-			}
-			fmt.Print(printMsg)
-			_ = os.Stdout.Sync()
-			printLength = len(printMsg)
-		}
 	}
-	printMsg := fmt.Sprintf(success, hashHandle.(hash.Hash).Sum(nil), hashFile)
-	printMsgLength := len(printMsg)
-	if printLength > printMsgLength {
-		printMsg += strings.Repeat(" ", printLength-printMsgLength)
-	}
-	fmt.Print(printMsg)
-	_ = os.Stdout.Sync()
+	fmt.Println(fmt.Sprintf(success, hashHandle.(hash.Hash).Sum(nil), hashFile))
 }
 
 func GetFileName() string {

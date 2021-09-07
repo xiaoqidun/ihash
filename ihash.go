@@ -19,6 +19,18 @@ import (
 	"strings"
 )
 
+const (
+	md5sum     = "md5sum"
+	sha1sum    = "sha1sum"
+	sha256sum  = "sha256sum"
+	sha384sum  = "sha384sum"
+	sha512sum  = "sha512sum"
+	sha3sum224 = "sha3sum224"
+	sha3sum256 = "sha3sum256"
+	sha3sum384 = "sha3sum384"
+	sha3sum512 = "sha3sum512"
+)
+
 var (
 	args    []string
 	author  bool
@@ -26,14 +38,15 @@ var (
 )
 
 var typeList = []string{
-	"md5sum",
-	"sha1sum",
-	"sha256sum",
-	"sha512sum",
-	"sha3sum224",
-	"sha3sum256",
-	"sha3sum384",
-	"sha3sum512",
+	md5sum,
+	sha1sum,
+	sha256sum,
+	sha384sum,
+	sha512sum,
+	sha3sum224,
+	sha3sum256,
+	sha3sum384,
+	sha3sum512,
 }
 
 func init() {
@@ -91,21 +104,23 @@ func InArray(value interface{}, array interface{}) int {
 func StrHash(hashType string, hashData []byte) string {
 	var sum interface{}
 	switch hashType {
-	case "md5sum":
+	case md5sum:
 		sum = md5.Sum(hashData)
-	case "sha1sum":
+	case sha1sum:
 		sum = sha1.Sum(hashData)
-	case "sha256sum":
+	case sha256sum:
 		sum = sha256.Sum256(hashData)
-	case "sha512sum":
+	case sha384sum:
+		sum = sha512.Sum384(hashData)
+	case sha512sum:
 		sum = sha512.Sum512(hashData)
-	case "sha3sum224":
+	case sha3sum224:
 		sum = sha3.Sum224(hashData)
-	case "sha3sum256":
+	case sha3sum256:
 		sum = sha3.Sum256(hashData)
-	case "sha3sum384":
+	case sha3sum384:
 		sum = sha3.Sum384(hashData)
-	case "sha3sum512":
+	case sha3sum512:
 		sum = sha3.Sum512(hashData)
 	}
 	return fmt.Sprintf("%x", sum)
@@ -127,21 +142,23 @@ func FileHash(hashType string, hashFile string) {
 	readBytes := make([]byte, 8192)
 	var hashHandle interface{}
 	switch hashType {
-	case "md5sum":
+	case md5sum:
 		hashHandle = md5.New()
-	case "sha1sum":
+	case sha1sum:
 		hashHandle = sha1.New()
-	case "sha256sum":
+	case sha256sum:
 		hashHandle = sha256.New()
-	case "sha512sum":
+	case sha384sum:
+		hashHandle = sha512.New384()
+	case sha512sum:
 		hashHandle = sha512.New()
-	case "sha3sum224":
+	case sha3sum224:
 		hashHandle = sha3.New224()
-	case "sha3sum256":
+	case sha3sum256:
 		hashHandle = sha3.New256()
-	case "sha3sum384":
+	case sha3sum384:
 		hashHandle = sha3.New384()
-	case "sha3sum512":
+	case sha3sum512:
 		hashHandle = sha3.New512()
 	}
 	for {

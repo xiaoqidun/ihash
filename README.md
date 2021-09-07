@@ -17,6 +17,7 @@ go build ihash.go
 - md5sum
 - sha1sum
 - sha256sum
+- sha384sum
 - sha512sum
 - sha3sum224
 - sha3sum256

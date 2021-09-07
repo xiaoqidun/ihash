@@ -1,12 +1,12 @@
 # ihash
 命令行，全平台，支持通配符的hash校验工具
 # 快速安装
-go get -u github.com/xiaoqidun/ihash
+go install github.com/xiaoqidun/ihash@latest
 # 编译安装
 ```
 git clone https://github.com/xiaoqidun/ihash.git
 cd ihash
-go build -mod=vendor ihash.go
+go build ihash.go
 ```
 # 手动安装
 1. 根据系统架构下载为你编译好的[二进制文件](https://github.com/xiaoqidun/ihash/releases)

@@ -3,8 +3,25 @@ type: docker
 name: default
 
 steps:
+  - name: generate
+    pull: if-not-exists
+    image: hkccr.ccs.tencentyun.com/xiaoqidun/build
+    commands:
+      - build -f build.sh -i ihash.go -o release/ihash
   - name: build
     pull: if-not-exists
-    image: golang:alpine
+    image: xiaoqidun/goenv
     commands:
-      - go build -mod=vendor ihash.go
+      - ./build.sh
+  - name: upload
+    image: xiaoqidun/gocos
+    settings:
+      secret_id:
+        from_secret: cos_secret_id
+      secret_key:
+        from_secret: cos_secret_key
+      bucket_url:
+        from_secret: cos_bucket_url
+      source: release/
+      target: product/ihash
+      strip_prefix: release/

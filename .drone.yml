@@ -1,10 +1,8 @@
 kind: pipeline
 type: docker
 name: default
-
 node:
   region: cn
-
 steps:
   - name: generate
     pull: if-not-exists
@@ -17,6 +15,7 @@ steps:
     commands:
       - ./build.sh
   - name: upload
+    pull: if-not-exists
     image: ccr.ccs.tencentyun.com/xiaoqidun/gocos
     settings:
       secret_id:

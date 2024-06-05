@@ -1,7 +1,7 @@
 module github.com/xiaoqidun/ihash
 
-go 1.22.2
+go 1.22.4
 
-require golang.org/x/crypto v0.23.0
+require golang.org/x/crypto v0.24.0
 
-require golang.org/x/sys v0.20.0 // indirect
+require golang.org/x/sys v0.21.0 // indirect

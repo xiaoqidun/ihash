@@ -8,7 +8,7 @@ jobs:
       - name: generate
         uses: docker://ccr.ccs.tencentyun.com/xiaoqidun/build:latest
         with:
-          args: build -f build.sh -i ihash.go -o release/ihash
+          args: -f build.sh -i ihash.go -o release/ihash
       - name: docker goenv
         uses: docker://ccr.ccs.tencentyun.com/xiaoqidun/goenv:latest
         env:
